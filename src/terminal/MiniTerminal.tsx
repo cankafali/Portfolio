@@ -18,9 +18,9 @@ export function MiniTerminal({ visible, onOpen }: Props) {
       id={MINI_TERMINAL_ID}
       type="button"
       className={`${styles.mini} ${visible ? "" : styles.hidden}`}
-      aria-label={t.terminal.openTerminal}
       onClick={onOpen}
     >
+      <span className="sr-only">{t.terminal.openTerminal}</span>
       <span aria-hidden="true">
         <span className={styles.user}>{profile.handle}</span>
         <span className={styles.path}>:~</span>

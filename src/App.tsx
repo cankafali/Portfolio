@@ -34,6 +34,7 @@ function markIntroSeen() {
 }
 
 function readInitialState(): { view: "terminal" | "classic"; intro: IntroMode; narrow: boolean } {
+  if (typeof window === "undefined") return { view: "classic", intro: "none", narrow: false };
   const view =
     new URLSearchParams(window.location.search).get("view") === "classic" ? "classic" : "terminal";
   const intro: IntroMode =

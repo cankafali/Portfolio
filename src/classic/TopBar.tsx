@@ -1,8 +1,17 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useSyncExternalStore } from "react";
 import { profile } from "../content/profile";
 import { LANGS } from "../i18n/lang";
 import { useLanguage } from "../i18n/useLanguage";
 import styles from "./TopBar.module.css";
+
+function subscribeScroll(onChange: () => void) {
+  window.addEventListener("scroll", onChange, { passive: true });
+  return () => window.removeEventListener("scroll", onChange);
+}
+
+const isScrolled = () => window.scrollY > 0;
+// Ön-render ve hydration sırasında sayfa en üstte kabul edilir (işaretleme eşleşsin).
+const isScrolledOnServer = () => false;
 
 function LangSwitch() {
   const { lang, setLang, t } = useLanguage();
@@ -28,14 +37,8 @@ function LangSwitch() {
 
 export function TopBar() {
   const { t } = useLanguage();
-  const [scrolled, setScrolled] = useState(() => window.scrollY > 0);
+  const scrolled = useSyncExternalStore(subscribeScroll, isScrolled, isScrolledOnServer);
   const menuRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const links = [
     { id: "projects", label: t.nav.projects },

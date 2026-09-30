@@ -56,3 +56,18 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - Komut çipleri: help, about, projects, skills, contact, cv, gui. Tıklanınca 12ms/karakter yazılıp çalışır (reduced motion'da anında); yazma sürerken ikinci çip yok sayılır.
 - Dokunmatik cihazlarda çip ya da çıktıdaki tıklanabilir öğe input'a odaklanmaz; mobil klavye açılmaz.
 - Morph'ta solan kısım artık çıktı + çiplerin tamamı (gövde); yoksa küçülen kutunun sağ alt köşesinde bir çip görünebiliyordu.
+- **Ön-render:** klasik görünüm build'de `vite build --ssr` + `scripts/prerender.mjs` ile `dist/index.html`'e basılır (§4 ve §11 bunu varsayıyor). Ek bağımlılık yok. SEO/Open Graph etiketleri, `robots.txt` ve `sitemap.xml` de burada `src/content/site.ts`'teki `siteUrl`'den üretilir; bu yüzden `robots.txt`/`sitemap.xml` `public/`'te değil, build çıktısında.
+- Hydration yalnızca istemcinin ilk ağacı ön-render ile birebir aynıyken (`?view=classic`, Türkçe) yapılır; terminalle ya da İngilizce açılışta `createRoot` yeniden çizer (uyumsuzluk konsola hata basmasın diye). Üst çubuğun kaydırma durumu `useSyncExternalStore` ile okunur (sunucu anlık görüntüsü `false`), aşağıdayken yenilemede de uyumsuzluk olmaz.
+- JS'siz ziyaretçide işlevsiz kalacak mini terminal `<noscript>` stiliyle gizlenir.
+- CSS (~5 KB gzip) ön-render sırasında HTML'e gömülür; render'ı bloklayan istek kalkar.
+- Module script `fetchpriority="low"`: fontlar ve ilk boyama önce iner (Lighthouse mobil FCP ~1.35 → ~0.9 sn).
+- Font preload yalnızca Instrument Sans latin + latin-ext (ilk ekranda Türkçe karakter var; latin-ext'i çıkarmak FCP'yi 1.7 sn'ye çıkardı). Martian Mono preload'u ölçümde LCP'yi ~40ms uzattığı için yok.
+- **LCP hedefi (< 1.5 sn) Lighthouse simülasyonunda karşılanmıyor:** klasik 1.8 sn, terminal 2.0 sn (3 koşunun medyanı). JS'siz sayfada 1.35 sn; fark, simülasyonun 81 KB JS'in inişini LCP zincirine eklemesinden. Kısıtlamasız gerçek ağda fontlar ~20ms'de iniyor. Hedefe inmek için JS'in ilk boyamadan sonra başlatılması gerekir; bu ana linkte terminalin geç açılması demek, kullanıcı kararı bekliyor.
+- CLS: intro çıktı basarken aktif prompt satırı gizlenir (yeni satırlar hep en sona eklenir, altta kayan öğe kalmaz). Terminal açılışında kalan CLS 0.005, klasikte 0.
+- Başlık çubuğundaki pasif dil düğmesi `--muted` yerine `color-mix(--muted 80%, --paper)` (axe: 4.28:1 → ~5.6:1).
+- Mini terminalin erişilebilir adı `aria-label` yerine görünmez metinle ("Terminali aç"): görünen `cankafali:~$` dekoratif, `aria-label` görünen metni içermediği için Lighthouse label-content-name-mismatch veriyordu.
+- Proje satırındaki Demo/Kod linkleri en az 24×24 dokunma hedefi (WCAG 2.5.8).
+- OG görseli (`public/og.png`) yer tutucu: proje fontu ve renkleriyle 1200×630, `{AD SOYAD}` içeriyor; isim girilince yenilenmeli.
+- Konsol mesajı `src/consoleGreeting.ts`'te; dil `?lang=en` ise İngilizce basılır. Font adı fontsource'un kaydettiği `Martian Mono Variable`.
+- `fetch-github.mjs` dil sıralamasını kendi (fork ve arşiv olmayan) repolarının ana diline göre sayarak yapar (repo başına ek API çağrısı olmasın diye).
+- Lighthouse skorları (`site.ts`) ana sayfanın (`/`) ölçümü: 99 / 100 / 100 / 100. `?view=classic` 100 / 100 / 100 / 100.

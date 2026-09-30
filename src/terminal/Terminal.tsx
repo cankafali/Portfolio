@@ -81,11 +81,12 @@ export function Terminal({
 
   // Pencere açık hale gelince odak input'a gelir. Dokunmatik cihazda klavyeyi zorla
   // açmamak için odak input yerine pencereye alınır.
+  // Intro sırasında aktif satır (ve input) gizlenebildiği için intro bitince de çalışır.
   useEffect(() => {
-    if (phase !== "open") return;
+    if (phase !== "open" || intro.running) return;
     if (hasFinePointer()) focusInput();
     else overlayRef.current?.focus({ preventScroll: true });
-  }, [phase]);
+  }, [phase, intro.running]);
 
   // Morph: layout effect içinde başlar ki ilk kare zaten başlangıç konumunda boyansın.
   useLayoutEffect(() => {
@@ -286,7 +287,7 @@ export function Terminal({
                   <OutputLine key={entry.id} line={entry.line} onCommand={runCommand} />
                 ))}
               </div>
-              <div className={styles.activeLine}>
+              <div className={styles.activeLine} hidden={introRunning && intro.typed === ""}>
                 <Prompt>
                   <span aria-hidden="true">
                     {before}

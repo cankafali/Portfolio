@@ -42,8 +42,16 @@
 
 .links {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-3);
   font-size: var(--fs-small);
+}
+
+/* en az 24×24 dokunma hedefi (WCAG 2.5.8) */
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 .panel {

@@ -25,3 +25,6 @@ dist-ssr
 
 # Tarayıcı test çıktıları
 .playwright-mcp
+
+# Ön-render için geçici SSR derlemesi
+dist-server

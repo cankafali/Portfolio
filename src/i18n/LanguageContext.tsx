@@ -1,11 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { profile } from "../content/profile";
-import type { Lang } from "./lang";
+import { readInitialLang, type Lang } from "./lang";
 import { LanguageContext, messages } from "./useLanguage";
-
-function readInitialLang(): Lang {
-  return new URLSearchParams(window.location.search).get("lang") === "en" ? "en" : "tr";
-}
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(readInitialLang);

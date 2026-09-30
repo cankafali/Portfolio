@@ -1,4 +1,7 @@
+/* --muted, --ink-raised üzerinde 4.29:1 kalıyor (AA altı); başlık çubuğunda biraz açılır */
 .window {
+  --muted-on-raised: color-mix(in srgb, var(--muted) 80%, var(--paper));
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -82,7 +85,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: var(--space-1);
-  color: var(--muted);
+  color: var(--muted-on-raised);
   font-size: 0.75rem;
 }
 
@@ -90,7 +93,7 @@
   padding: var(--space-1);
   border: 0;
   background: none;
-  color: var(--muted);
+  color: var(--muted-on-raised);
   font: inherit;
   cursor: pointer;
 }

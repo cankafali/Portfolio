@@ -1,6 +1,14 @@
 {
-  "fetchedAt": null,
-  "publicRepos": 0,
-  "topLanguages": [],
-  "lastUpdated": null
+  "fetchedAt": "2026-09-30T11:27:01.628Z",
+  "publicRepos": 17,
+  "topLanguages": [
+    "JavaScript",
+    "CSS",
+    "TypeScript"
+  ],
+  "lastUpdated": {
+    "name": "Yitik",
+    "url": "https://github.com/cankafali/Yitik",
+    "pushedAt": "2026-09-29T16:46:35Z"
+  }
 }
