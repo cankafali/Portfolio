@@ -9,3 +9,11 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - `src/content/github.ts` eklendi: `github.json`'ı tipli olarak dışa veren ince sarmalayıcı.
 - `prefers-reduced-motion` altında `--dur-fast`/`--dur-base` 0ms, `--dur-morph` 150ms (§3.4'teki opaklık geçişi süresi).
 - `--muted` / `--ink` kontrastı 4.99:1 (AA geçer); `--muted` / `--ink-raised` 4.29:1 olduğu için başlık çubuğunda normal boyutlu metin `--muted` yerine `--paper` kullanılacak.
+- `LanguageContext` 2. aşamada eklendi (klasik görünümün TR | EN geçişi için); `?lang=en` URL'ye yazılır, `<html lang>` ve meta description güncellenir.
+- Tema yalnızca sistem tercihini (`prefers-color-scheme`) izler; spesifikasyonda tema düğmesi olmadığı için eklenmedi.
+- Bölüm başlıklarındaki `~/projects` gibi yollar terminal gelene kadar tıklanamaz düz metin (`aria-hidden`); 5. aşamada terminali açan düğmeye dönüşecek.
+- Alt bilgideki `~` tuşu ipucu terminal eklenene kadar gösterilmiyor; Lighthouse skorları `src/content/site.ts` içinde `null` iken gizli.
+- Mobil menü yerel `<dialog>` (showModal) ile yapıldı: odak tuzağı ve Esc ile kapanma tarayıcıdan gelir.
+- Mobilde TR | EN üst çubukta kalır, yalnızca bölüm linkleri "Menü"ye taşınır.
+- Proje önizleme görseli yoksa (`public/projects/*.webp` henüz eklenmedi) `onError` ile gizlenir; kırık görsel gösterilmez.
+- Print: proje detayları (akordeon), görseller, butonlar, üst çubuk ve alt bilgi basılmaz; `http` linklerinin URL'si parantez içinde yazılır.

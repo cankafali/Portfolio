@@ -1,0 +1,81 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, var(--measure)) minmax(16rem, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.text {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.skillsTitle {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.groupTitle {
+  margin: 0 0 var(--space-1);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.items {
+  padding: 0;
+  list-style: none;
+}
+
+/* "Öğreniyorum" diğerlerinden ayrı durur */
+.learning {
+  grid-column: 1 / -1;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--page-line);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+}
+
+@media print {
+  .grid {
+    grid-template-columns: 1.6fr 1fr;
+    gap: 6mm;
+  }
+
+  .text {
+    gap: 2mm;
+  }
+
+  .skillsTitle {
+    margin-bottom: 1.5mm;
+  }
+
+  .groups {
+    gap: 2mm 4mm;
+  }
+
+  .items li {
+    display: inline;
+  }
+
+  .items li:not(:last-child)::after {
+    content: ", ";
+  }
+
+  .learning {
+    padding-top: 0;
+    border-top: 0;
+  }
+}

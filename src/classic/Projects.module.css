@@ -1,0 +1,37 @@
+.list {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 320px;
+  height: 200px;
+  object-fit: cover;
+  background: var(--page-line);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.previewVisible {
+  opacity: 1;
+}
+
+@media not ((hover: hover) and (pointer: fine)), (max-width: 720px) {
+  .preview {
+    display: none;
+  }
+}
+
+@media print {
+  .preview {
+    display: none;
+  }
+}

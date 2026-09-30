@@ -1,0 +1,135 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--topbar-h);
+  background: color-mix(in srgb, var(--page) 90%, transparent);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.scrolled {
+  border-bottom-color: var(--page-line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: var(--content-max);
+  height: 100%;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.name {
+  margin-right: auto;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.navList {
+  display: flex;
+  gap: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.navList a,
+.menuList a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.navList a:hover,
+.menuList a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text-soft);
+  font-size: var(--fs-small);
+}
+
+.langButton,
+.menuButton,
+.closeButton {
+  padding: var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.langButton[aria-pressed="true"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.menuButton {
+  display: none;
+  color: var(--text);
+}
+
+.closeButton {
+  color: var(--text);
+}
+
+.menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0 var(--gutter);
+  border: 0;
+  background: var(--page);
+  color: var(--text);
+}
+
+.menu::backdrop {
+  background: transparent;
+}
+
+.menuHead {
+  display: flex;
+  align-items: center;
+  height: var(--topbar-h);
+}
+
+.menuList {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+}
+
+@media (max-width: 640px) {
+  .inner {
+    gap: var(--space-3);
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-block;
+  }
+}
+
+@media print {
+  .bar {
+    display: none;
+  }
+}

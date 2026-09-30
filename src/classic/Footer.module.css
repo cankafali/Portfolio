@@ -1,0 +1,25 @@
+.footer {
+  border-top: 1px solid var(--page-line);
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--gutter) calc(var(--space-6) + env(safe-area-inset-bottom));
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--text-soft);
+}
+
+.inner a {
+  color: inherit;
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}

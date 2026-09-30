@@ -1,0 +1,59 @@
+/* Ctrl+P: tek sayfalık, siyah-beyaz A4 CV (TASARIM.md §12) */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  :root,
+  :root[data-theme="dark"],
+  :root:not([data-theme="light"]) {
+    --page: #fff;
+    --page-line: #bbb;
+    --text: #000;
+    --text-soft: #444;
+    --link: #000;
+
+    --fs-display: 22pt;
+    --fs-h2: 13pt;
+    --fs-body: 10.5pt;
+    --fs-small: 9pt;
+    --lh-body: 1.4;
+
+    color-scheme: light;
+  }
+
+  body {
+    min-height: 0;
+    background: #fff;
+    color: #000;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8.5pt;
+    color: var(--text-soft);
+    overflow-wrap: anywhere;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  li,
+  p {
+    break-inside: avoid;
+  }
+
+  img {
+    display: none !important;
+  }
+}

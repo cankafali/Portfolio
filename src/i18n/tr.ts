@@ -1,6 +1,14 @@
 export const tr = {
   skipToContent: "İçeriğe atla",
-  nav: { projects: "Projeler", about: "Hakkımda", contact: "İletişim", menu: "Menü" },
+  nav: {
+    main: "Ana gezinme",
+    projects: "Projeler",
+    about: "Hakkımda",
+    contact: "İletişim",
+    menu: "Menü",
+    close: "Kapat",
+    language: "Dil",
+  },
   actions: {
     workTogether: "Birlikte çalışalım",
     classicView: "Klasik görünüm",
@@ -17,7 +25,16 @@ export const tr = {
     education: "Eğitim",
     contact: "İletişim",
   },
-  project: { solved: "Neyi çözdüm", learned: "Ne öğrendim" },
+  project: { demo: "Demo", code: "Kod", solved: "Neyi çözdüm", learned: "Ne öğrendim" },
+  education: { present: "devam" },
+  footer: {
+    builtWith: "Bu site React, TypeScript ve Vite ile yapıldı.",
+    source: "Kaynak kodu GitHub'da.",
+    performance: "Performans",
+    accessibility: "Erişilebilirlik",
+    bestPractices: "En iyi uygulamalar",
+    seo: "SEO",
+  },
   terminal: {
     skipHint: "Atlamak için bir tuşa basın",
     exploreHint: "Keşfetmek için bir komut yazın ya da help yazın.",

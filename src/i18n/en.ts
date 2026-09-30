@@ -2,7 +2,15 @@ import type { Messages } from "./tr";
 
 export const en: Messages = {
   skipToContent: "Skip to content",
-  nav: { projects: "Projects", about: "About", contact: "Contact", menu: "Menu" },
+  nav: {
+    main: "Main navigation",
+    projects: "Projects",
+    about: "About",
+    contact: "Contact",
+    menu: "Menu",
+    close: "Close",
+    language: "Language",
+  },
   actions: {
     workTogether: "Let's work together",
     classicView: "Classic view",
@@ -19,7 +27,16 @@ export const en: Messages = {
     education: "Education",
     contact: "Contact",
   },
-  project: { solved: "What I solved", learned: "What I learned" },
+  project: { demo: "Demo", code: "Code", solved: "What I solved", learned: "What I learned" },
+  education: { present: "present" },
+  footer: {
+    builtWith: "This site was built with React, TypeScript and Vite.",
+    source: "Source code on GitHub.",
+    performance: "Performance",
+    accessibility: "Accessibility",
+    bestPractices: "Best practices",
+    seo: "SEO",
+  },
   terminal: {
     skipHint: "Press any key to skip",
     exploreHint: "Type a command to explore, or type help.",

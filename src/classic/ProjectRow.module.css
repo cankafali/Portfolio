@@ -1,0 +1,138 @@
+/* ls -l çıktısından esinlenen satır: ad, açıklama, stack, yıl, linkler */
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-5);
+  align-items: baseline;
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: var(--label-col) minmax(0, 1fr) 11rem 3rem;
+  column-gap: var(--space-5);
+  align-items: baseline;
+  width: 100%;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.toggle:hover .summary {
+  text-decoration: underline;
+  text-decoration-color: var(--page-line);
+  text-underline-offset: 4px;
+}
+
+.meta {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--text-soft);
+}
+
+.year {
+  font-variant-numeric: tabular-nums;
+}
+
+.links {
+  display: flex;
+  gap: var(--space-4);
+  font-size: var(--fs-small);
+}
+
+.panel {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--space-4);
+  max-width: calc(var(--measure) + var(--label-col) + var(--space-5));
+  padding: 0 0 var(--space-5) calc(var(--label-col) + var(--space-5));
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.image {
+  display: none;
+}
+
+.notes {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.notes dt {
+  font-weight: 600;
+}
+
+.notes dd {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: 1fr;
+    padding-block: var(--space-3);
+  }
+
+  .toggle {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    padding-block: var(--space-2);
+  }
+
+  .name,
+  .summary {
+    flex-basis: 100%;
+  }
+
+  .links {
+    padding-bottom: var(--space-2);
+  }
+
+  .panel {
+    padding: var(--space-3) 0 var(--space-4);
+  }
+
+  .image {
+    display: block;
+    order: -1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 5;
+    object-fit: cover;
+    background: var(--page-line);
+  }
+}
+
+@media print {
+  .row {
+    grid-template-columns: 1fr;
+    padding-bottom: 1.5mm;
+  }
+
+  .toggle {
+    grid-template-columns: 6rem minmax(0, 1fr) 8rem 2.5rem;
+    padding-block: 0.5mm;
+  }
+
+  /* URL'ler print.css'te parantez içinde yazdırılır */
+  .links {
+    padding-left: calc(6rem + var(--space-5));
+    font-size: 8.5pt;
+    color: var(--text-soft);
+  }
+
+  .panel {
+    display: none;
+  }
+}

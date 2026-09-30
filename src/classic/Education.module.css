@@ -1,0 +1,35 @@
+.list {
+  display: grid;
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: var(--label-col) minmax(0, 1fr);
+  column-gap: var(--space-5);
+  align-items: baseline;
+}
+
+.years {
+  font-size: var(--fs-small);
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .item {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .list {
+    gap: 1mm;
+  }
+
+  .item {
+    grid-template-columns: 6rem minmax(0, 1fr);
+  }
+}

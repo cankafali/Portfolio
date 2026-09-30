@@ -1,0 +1,55 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-5);
+  min-height: calc(70svh - var(--topbar-h));
+  padding-block: var(--space-7);
+}
+
+.name {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.name:focus {
+  outline: none;
+}
+
+.lead {
+  max-width: 40ch;
+  font-size: calc(var(--fs-body) * 1.25);
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.status {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--text-soft);
+}
+
+@media print {
+  .hero {
+    min-height: 0;
+    gap: 2mm;
+    padding-block: 0 3mm;
+  }
+
+  .lead {
+    max-width: none;
+    font-size: 11.5pt;
+  }
+
+  .actions {
+    display: none;
+  }
+}

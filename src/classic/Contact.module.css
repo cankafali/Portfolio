@@ -1,0 +1,49 @@
+.emailRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.email {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  font-weight: 500;
+  color: var(--text);
+  text-decoration-color: var(--page-line);
+  text-underline-offset: 6px;
+  overflow-wrap: anywhere;
+}
+
+.email:hover {
+  text-decoration-color: currentColor;
+}
+
+/* "Kopyala" ↔ "Kopyalandı" geçişinde genişlik zıplamasın */
+.copy {
+  min-width: 9.5rem;
+}
+
+.links {
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+@media print {
+  .email {
+    font-size: 12pt;
+    text-decoration: none;
+  }
+
+  .copy {
+    display: none;
+  }
+
+  .links {
+    margin-top: 1.5mm;
+    gap: 5mm;
+  }
+}

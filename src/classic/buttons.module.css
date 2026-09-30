@@ -1,0 +1,35 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--text);
+  border-radius: var(--radius-button);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.primary {
+  composes: base;
+  background: var(--text);
+  color: var(--page);
+}
+
+.primary:hover {
+  background: color-mix(in srgb, var(--text) 82%, var(--page));
+}
+
+.secondary {
+  composes: base;
+  background: transparent;
+  color: var(--text);
+}
+
+.secondary:hover {
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
