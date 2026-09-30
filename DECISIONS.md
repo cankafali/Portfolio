@@ -85,3 +85,5 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - Proje önizlemeleri (`public/projects/*.webp`) canlı demoların 1280×800 ekran görüntüsünden 640×400 WebP (8–20 KB). OG görseli isim ve unvanla yeniden üretildi.
 - Ön-render'daki meta description deseni, Prettier'ın etiketi çok satıra bölmesine dayanıklı hale getirildi.
 - İçerik büyüdüğü için JS 83.5 → 86.3 KB gzip (sınır 90 KB).
+- Sismo backend'i yayına alındıktan sonra önizleme görseli canlı veriyle yeniden çekildi.
+- Lup metinleri repo kodundan yazıldı (useGSAP + gsap.matchMedia, ScrollTrigger/DrawSVG'nin ayrı pakette yüklenmesi, Lenis–GSAP ticker bağlantısı, lup imleci, View Transitions); stack'e Lenis eklendi.
