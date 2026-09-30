@@ -1,0 +1,17 @@
+.prompt {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.user {
+  color: var(--teal);
+}
+
+.path {
+  color: var(--muted);
+}
+
+.dollar {
+  color: var(--amber);
+  font-weight: 600;
+}

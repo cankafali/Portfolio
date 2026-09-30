@@ -17,3 +17,11 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - Mobilde TR | EN üst çubukta kalır, yalnızca bölüm linkleri "Menü"ye taşınır.
 - Proje önizleme görseli yoksa (`public/projects/*.webp` henüz eklenmedi) `onError` ile gizlenir; kırık görsel gösterilmez.
 - Print: proje detayları (akordeon), görseller, butonlar, üst çubuk ve alt bilgi basılmaz; `http` linklerinin URL'si parantez içinde yazılır.
+- Terminal oturumu (çıktı geçmişi) `useTerminalSession` ile App seviyesinde tutulur; pencere kapanıp açılınca geçmiş korunur (5. aşamadaki morph buna dayanacak).
+- 3. aşamada görünüm geçişi animasyonsuz: kırmızı/sarı nokta ve Esc klasik görünüme geçer, `~` geri açar, `?view=classic` yalnızca açılışta okunur. Morph, mini terminal ve URL'ye yazma 5. aşamada.
+- Ctrl+L ve Ctrl+C çekirdekle birlikte eklendi (tek satırlık işler); Tab tamamlama, ↑/↓ geçmiş ve Levenshtein önerisi 6. aşamada.
+- Her komut çıktısından sonra bir boş satır basılır (§5.2 intro senaryosundaki düzenle aynı).
+- `help` komutu registry'ye fabrika fonksiyonuyla bağlanır (`createHelpCommand`); döngüsel import yok.
+- Proje klasörleri terminalde `lup/` biçiminde (§5.2'deki `ls` çıktısı gibi) ve tıklanınca `open <slug>` çalışır; `open` sondaki `/`'yi kabul eder.
+- Terminal input'u yalnızca `(pointer: fine)` cihazlarda açılışta odak alır; dokunmatikte klavye kendiliğinden açılmaz.
+- Terminal katmanı `role="dialog"` + `aria-modal`; çıktı `role="log"`, aktif satır ve input log bölgesinin dışında (her tuş duyurulmasın diye).

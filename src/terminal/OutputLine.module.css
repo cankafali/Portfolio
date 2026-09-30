@@ -1,0 +1,86 @@
+.line {
+  min-height: calc(var(--lh-term) * 1em);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.default {
+  color: var(--paper);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.teal {
+  color: var(--teal);
+}
+
+.amber {
+  color: var(--amber);
+}
+
+.red {
+  color: var(--red);
+}
+
+.strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.link,
+.command,
+.copy {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--teal);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link:hover,
+.command:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.copy {
+  color: var(--muted);
+}
+
+.copy:hover {
+  color: var(--paper);
+}
+
+/* Sütunlu çıktı (help, projects, contact): ilk sütun içeriği kadar */
+.table {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  column-gap: 2ch;
+}
+
+.row {
+  display: contents;
+}
+
+.cell {
+  overflow-wrap: anywhere;
+}
+
+/* İki hücreli satırlarda (help, contact) ikinci hücre kalan genişliği kaplar */
+.row > .cell:nth-child(2):last-child {
+  grid-column: 2 / -1;
+}
+
+@media (max-width: 640px) {
+  .table {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
+  .row > .cell:nth-child(n + 3) {
+    grid-column: 2;
+  }
+}

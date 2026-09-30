@@ -1,0 +1,124 @@
+.window {
+  display: flex;
+  flex-direction: column;
+  width: min(920px, 100vw - 48px);
+  height: min(620px, 100dvh - 96px);
+  overflow: hidden;
+  border-radius: var(--radius-window);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: var(--fs-term);
+  line-height: var(--lh-term);
+  box-shadow: var(--shadow-window);
+}
+
+.fullscreen {
+  width: 100vw;
+  height: 100dvh;
+  border-radius: 0;
+}
+
+.titleBar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  flex: none;
+  height: 40px;
+  padding-inline: var(--space-3);
+  background: var(--ink-raised);
+}
+
+.dots {
+  display: flex;
+}
+
+/* 12px görsel nokta, 24px dokunma alanı */
+.dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--dot-color);
+  transition: filter var(--dur-fast) var(--ease-out);
+}
+
+.dot:hover::before {
+  filter: brightness(1.15);
+}
+
+.red {
+  --dot-color: var(--red);
+}
+
+.yellow {
+  --dot-color: var(--amber);
+}
+
+.green {
+  --dot-color: var(--teal);
+}
+
+.title {
+  font-size: 0.8125rem;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.lang {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.langButton {
+  padding: var(--space-1);
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.langButton:hover,
+.langButton[aria-pressed="true"] {
+  color: var(--paper);
+}
+
+.langButton[aria-pressed="true"] {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .window {
+    width: calc(100vw - 24px);
+    height: calc(100dvh - 24px);
+  }
+
+  .fullscreen {
+    width: 100vw;
+    height: 100dvh;
+  }
+
+  .title {
+    display: none;
+  }
+
+  .lang {
+    grid-column: 3;
+  }
+}

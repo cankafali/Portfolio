@@ -1,0 +1,82 @@
+/* Klasik sayfanın üstünde koyu örtü: --ink %92, blur yok */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgb(15 27 45 / 0.92);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.output {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  scrollbar-color: var(--ink-raised) transparent;
+}
+
+.activeLine {
+  position: relative;
+}
+
+.cursor {
+  background: var(--amber);
+  color: var(--ink);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+.typing {
+  animation: none;
+}
+
+@keyframes blink {
+  50% {
+    background: transparent;
+    color: inherit;
+  }
+}
+
+/* Gerçek input satırın üstünde görünmez durur: mobil klavye ve ekran okuyucu için.
+   16px, iOS'un odaklanınca yakınlaştırmasını önler. */
+.input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-size: 16px;
+  opacity: 0;
+}
+
+.input:focus {
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .output {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}
+
+@media print {
+  .overlay {
+    display: none;
+  }
+}

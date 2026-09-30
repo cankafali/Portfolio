@@ -39,6 +39,18 @@ export const tr = {
     skipHint: "Atlamak için bir tuşa basın",
     exploreHint: "Keşfetmek için bir komut yazın ya da help yazın.",
     openTerminal: "Terminali aç",
+    label: "Terminal",
+    inputLabel: "Komut",
+    toClassic: "Klasik görünüme geç",
+    minimize: "Küçült",
+    fullscreen: "Tam ekran",
+    notFound: "komut bulunamadı",
+    helpIntro: "Kullanılabilir komutlar:",
+    openUsage: "Kullanım: open <proje>",
+    openHint: "Detay için bir projeye tıklayın ya da open <proje> yazın.",
+    projectNotFound: "proje bulunamadı",
+    stack: "Teknolojiler",
+    email: "E-posta",
   },
 } as const;
 
