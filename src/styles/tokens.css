@@ -1,0 +1,90 @@
+:root {
+  /* Terminal */
+  --ink: #0f1b2d; /* terminal zemini, klasik görünümde ana metin */
+  --ink-raised: #172840; /* terminal başlık çubuğu, seçili satır */
+  --paper: #e8ecf1; /* terminal ana metni */
+  --muted: #7b8ba3; /* prompt yolu, ikincil metin, yorumlar */
+  --amber: #ffb547; /* imleç, prompt işareti ($), odak halkası — TEK vurgu rengi */
+  --teal: #7fd6c2; /* klasör isimleri, başarılı çıktı, linkler (terminal içinde) */
+  --red: #ff7a7a; /* "komut bulunamadı" */
+
+  /* Klasik görünüm (açık tema) */
+  --page: #eef1f5; /* sayfa zemini — serin gri, krem DEĞİL */
+  --page-line: #d3dae3; /* ayırıcı çizgiler */
+  --text: #0f1b2d; /* = --ink */
+  --text-soft: #4a5a70;
+  --link: #1f5fbf;
+
+  /* Fontlar */
+  --font-mono: "Martian Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: "Instrument Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Tip ölçeği */
+  --fs-display: clamp(2.5rem, 6vw, 4.5rem);
+  --lh-display: 1.05;
+  --fs-h2: clamp(1.5rem, 3vw, 2rem);
+  --lh-h2: 1.2;
+  --fs-body: 1.0625rem;
+  --lh-body: 1.6;
+  --fs-small: 0.875rem;
+  --lh-small: 1.5;
+  --fs-term: clamp(0.8125rem, 1.4vw, 0.9375rem);
+  --lh-term: 1.65;
+  --measure: 68ch;
+
+  /* Boşluk */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --space-9: 112px;
+
+  /* Köşe */
+  --radius-window: 12px;
+  --radius-mini: 10px;
+  --radius-button: 8px;
+  --radius-chip: 6px;
+
+  /* Gölge (tek gölge: terminal penceresi) */
+  --shadow-window: 0 30px 80px -20px rgb(15 27 45 / 0.55);
+
+  /* Hareket */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-morph: 720ms;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0f1b2d;
+    --page-line: #26374f;
+    --text: #e8ecf1;
+    --text-soft: #9aa9be;
+    --link: #7fd6c2;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --page: #0f1b2d;
+  --page-line: #26374f;
+  --text: #e8ecf1;
+  --text-soft: #9aa9be;
+  --link: #7fd6c2;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-morph: 150ms;
+  }
+}

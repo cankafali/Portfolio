@@ -1,0 +1,45 @@
+.page {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.name {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: 600;
+}
+
+.tagline {
+  max-width: var(--measure);
+  font-size: calc(var(--fs-body) * 1.25);
+  color: var(--text-soft);
+}
+
+.term {
+  margin: 0;
+  padding: var(--space-5);
+  border-radius: var(--radius-window);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: var(--fs-term);
+  line-height: var(--lh-term);
+  white-space: pre-wrap;
+  box-shadow: var(--shadow-window);
+}
+
+.user {
+  color: var(--teal);
+}
+
+.path {
+  color: var(--muted);
+}
+
+.dollar {
+  color: var(--amber);
+  font-weight: 600;
+}
