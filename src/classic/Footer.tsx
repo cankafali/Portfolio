@@ -15,6 +15,9 @@ export function Footer() {
             {t.footer.source}
           </a>
         </span>
+        <span>
+          {t.footer.tildeBefore} <kbd className={styles.kbd}>~</kbd> {t.footer.tildeAfter}
+        </span>
         {lighthouse && (
           <span>
             Lighthouse: {t.footer.performance} {lighthouse.performance}, {t.footer.accessibility}{" "}

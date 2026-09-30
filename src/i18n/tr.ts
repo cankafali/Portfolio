@@ -34,6 +34,8 @@ export const tr = {
     accessibility: "Erişilebilirlik",
     bestPractices: "En iyi uygulamalar",
     seo: "SEO",
+    tildeBefore: "Terminal için",
+    tildeAfter: "tuşuna basın.",
   },
   terminal: {
     skipHint: "Atlamak için bir tuşa basın",
@@ -51,6 +53,7 @@ export const tr = {
     projectNotFound: "proje bulunamadı",
     stack: "Teknolojiler",
     email: "E-posta",
+    runInTerminal: "Terminalde çalıştır",
   },
 } as const;
 

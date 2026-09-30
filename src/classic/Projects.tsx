@@ -53,7 +53,7 @@ export function Projects() {
   const previewVisible = previewSrc !== null && !brokenImages.has(previewSrc);
 
   return (
-    <Section id="projects" path="~/projects" title={t.sections.projects}>
+    <Section id="projects" command="projects" title={t.sections.projects}>
       <ul className={styles.list} onPointerMove={movePreview} onPointerLeave={hidePreview}>
         {projects.map((project) => (
           <ProjectRow

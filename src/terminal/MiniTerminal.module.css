@@ -1,0 +1,89 @@
+.mini {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  width: 176px;
+  height: 44px;
+  padding: 0 14px;
+  /* koyu temada zemin de --ink olduğu için ince çerçeve */
+  border: 1px solid var(--page-line);
+  border-radius: var(--radius-mini);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  white-space: pre;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.mini:hover,
+.mini:focus-visible {
+  transform: translateY(-4px);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.user {
+  color: var(--teal);
+}
+
+.path {
+  color: var(--muted);
+}
+
+.dollar {
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.cursor {
+  background: var(--amber);
+  animation: blink 1.6s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    background: transparent;
+  }
+}
+
+.tip {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  padding: 0 var(--space-2);
+  border-radius: 4px;
+  /* arkadaki sayfa metninin üstüne binince okunabilsin */
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.mini:hover .tip,
+.mini:focus-visible .tip {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}
+
+@media print {
+  .mini {
+    display: none;
+  }
+}

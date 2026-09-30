@@ -1,6 +1,7 @@
 import { about } from "./commands/about";
 import { clear } from "./commands/clear";
 import { contact } from "./commands/contact";
+import { education } from "./commands/education";
 import { gui } from "./commands/gui";
 import { createHelpCommand } from "./commands/help";
 import { open } from "./commands/open";
@@ -16,6 +17,7 @@ commands.push(
   about,
   projects,
   open,
+  education,
   contact,
   gui,
   clear,

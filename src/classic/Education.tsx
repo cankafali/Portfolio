@@ -7,7 +7,7 @@ export function Education() {
   const { lang, t } = useLanguage();
 
   return (
-    <Section id="education" path="~/education" title={t.sections.education}>
+    <Section id="education" command="education" title={t.sections.education}>
       <ol className={styles.list}>
         {education.map((item) => (
           <li key={item.school} className={styles.item}>

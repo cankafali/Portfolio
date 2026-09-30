@@ -36,6 +36,8 @@ export const en: Messages = {
     accessibility: "Accessibility",
     bestPractices: "Best practices",
     seo: "SEO",
+    tildeBefore: "Press",
+    tildeAfter: "for the terminal.",
   },
   terminal: {
     skipHint: "Press any key to skip",
@@ -53,5 +55,6 @@ export const en: Messages = {
     projectNotFound: "project not found",
     stack: "Stack",
     email: "Email",
+    runInTerminal: "Run in terminal",
   },
 };

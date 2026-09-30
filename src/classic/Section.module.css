@@ -12,9 +12,20 @@
 }
 
 .path {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   color: var(--text-soft);
+  cursor: pointer;
+}
+
+.path:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .title {

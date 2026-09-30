@@ -8,7 +8,7 @@ export function About() {
   const { lang, t } = useLanguage();
 
   return (
-    <Section id="about" path="~/about" title={t.sections.about}>
+    <Section id="about" command="about" title={t.sections.about}>
       <div className={styles.grid}>
         <div className={styles.text}>
           {about[lang].paragraphs.map((paragraph, i) => (

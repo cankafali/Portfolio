@@ -1,10 +1,11 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type ReactNode, type Ref } from "react";
 import { profile } from "../content/profile";
 import { LANGS } from "../i18n/lang";
 import { useLanguage } from "../i18n/useLanguage";
 import styles from "./TerminalWindow.module.css";
 
 type Props = {
+  ref?: Ref<HTMLDivElement>;
   fullscreen: boolean;
   onClose: () => void;
   onToggleFullscreen: () => void;
@@ -14,11 +15,11 @@ type Props = {
 export const TERMINAL_TITLE_ID = "terminal-title";
 
 // Başlık çubuğu: üç nokta işlevli (kırmızı/sarı = klasik görünüm, yeşil = tam ekran).
-export function TerminalWindow({ fullscreen, onClose, onToggleFullscreen, children }: Props) {
+export function TerminalWindow({ ref, fullscreen, onClose, onToggleFullscreen, children }: Props) {
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <div className={`${styles.window} ${fullscreen ? styles.fullscreen : ""}`}>
+    <div ref={ref} className={`${styles.window} ${fullscreen ? styles.fullscreen : ""}`}>
       <div className={styles.titleBar}>
         <div className={styles.dots}>
           <button

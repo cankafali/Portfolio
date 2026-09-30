@@ -26,7 +26,7 @@ export function Contact() {
   };
 
   return (
-    <Section id="contact" path="~/contact" title={t.sections.contact}>
+    <Section id="contact" command="contact" title={t.sections.contact}>
       <div className={styles.emailRow}>
         <a href={`mailto:${profile.email}`} className={styles.email}>
           {profile.email}

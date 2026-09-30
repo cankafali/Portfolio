@@ -33,3 +33,13 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - `gui` komutu (takma adlar: `exit`, `klasik`) 4. aşamada eklendi, çünkü introdaki "Klasik görünüm" butonu onu çalıştırıyor; morph 5. aşamada.
 - `./contact.sh` butonları arasındaki boşluk metin değil CSS boşluğu; §5.2'deki iki boşluklu girinti dar ekranda buton alt satıra kayınca hizayı bozduğu için kaldırıldı.
 - Intro bitince ya da atlanınca `sessionStorage`'a `intro-seen=1` yazılır.
+- **`motion` kaldırıldı; morph Web Animations API ile yapıldı** (kullanıcı kararı). `layoutId` için `domMax` gerekiyordu ve 90 KB JS bütçesini aşıyordu; FLIP yaklaşımı birkaç KB ve bağımlılıksız.
+- Morph'ta pencere ölçeklenmez (metin ve köşeler bozulmasın): yerinde kalan pencere `clip-path: inset(... round 12px→10px)` ile sağ alt köşeye doğru kırpılır ve `translate` ile mini terminalin konumuna taşınır. Çıktı alanı önce şeffaflaştığı için görünen yalnızca mürekkep zemin; bitince yerini gerçek mini terminal alır.
+- Pencerenin gölgesi morph süresince `clip-path` tarafından kırpılır; koyu örtünün üstünde zaten neredeyse görünmediği için kabul edildi.
+- Morph sürerken terminal katmanı tıklamaları almaz (`pointer-events: none`); Esc/gui yalnızca açık terminali kapatır, çift tetiklenmez.
+- Terminal kapanınca odak `<h1>`'e `preventScroll` ile gider: sayfa kaydırılmışken terminal açılıp kapanırsa kullanıcı yukarı fırlatılmaz.
+- Terminal açıldığında dokunmatik cihazlarda odak input yerine pencereye (dialog) alınır; klavye kendiliğinden açılmaz ama odak kaybolmaz.
+- URL senkronu yalnızca animasyon bitince yapılır: klasikte `?view=classic`, terminalde parametre silinir (`lang` korunur).
+- Bölüm başlıklarındaki `~/projects` gibi yollar artık düğme; terminali o komutla açar. Bunun için `education` komutu 6. aşamadan öne alındı.
+- Alt bilgide `~` ipucu eklendi; alt boşluk mini terminalin altında metin kalmayacak kadar artırıldı.
+- Mini terminal koyu temada sayfa zeminiyle aynı renkte olduğu için `--page-line` çerçeveli; hover ipucu, arkadaki metnin üstüne bindiğinde okunsun diye zeminli.

@@ -5,6 +5,22 @@
   z-index: 50;
   display: grid;
   place-items: center;
+}
+
+.overlay:focus {
+  outline: none;
+}
+
+/* Morph sürerken tıklamalar arkaya ya da pencereye düşmesin */
+.overlay[data-phase="opening"],
+.overlay[data-phase="closing"] {
+  pointer-events: none;
+}
+
+/* Örtü ayrı katman: morph'ta yalnızca opaklığı canlandırılır */
+.backdrop {
+  position: absolute;
+  inset: 0;
   background: rgb(15 27 45 / 0.92);
 }
 
