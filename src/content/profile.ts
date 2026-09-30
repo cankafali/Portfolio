@@ -34,6 +34,6 @@ export const profile: Profile = {
     github: "https://github.com/cankafali",
     linkedin: "https://www.linkedin.com/in/hakkicankafali/",
   },
-  repoUrl: "",
+  repoUrl: "https://github.com/cankafali/Portfolio",
   cvFile: { tr: "/cv-tr.pdf", en: "/cv-en.pdf" },
 };
