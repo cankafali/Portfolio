@@ -25,3 +25,11 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - Proje klasörleri terminalde `lup/` biçiminde (§5.2'deki `ls` çıktısı gibi) ve tıklanınca `open <slug>` çalışır; `open` sondaki `/`'yi kabul eder.
 - Terminal input'u yalnızca `(pointer: fine)` cihazlarda açılışta odak alır; dokunmatikte klavye kendiliğinden açılmaz.
 - Terminal katmanı `role="dialog"` + `aria-modal`; çıktı `role="log"`, aktif satır ve input log bölgesinin dışında (her tuş duyurulmasın diye).
+- Intro zamanlaması: ilk karakterden önce 300ms, adımlar arası 200ms bekleme (spesifikasyonda yok; komutlar birbirine yapışmasın diye). Ölçülen toplam: masaüstü ~4.1 sn, mobil ~3.1 sn. 4.5 sn bütçesi aşılırsa yalnızca yazma hızı ölçeklenir.
+- Intro yalnızca sayfa terminalle açıldığında oynar; `?view=classic` ile açılıp sonra terminale geçilirse yalnızca ipucu satırı görünür (§4 akışında morph interaktif terminale gider).
+- `prefers-reduced-motion` açıkken intro, tekrar ziyaretteki gibi tamamlanmış haliyle anında basılır.
+- Introyu atlatan tuş/tık başka iş yapmaz: tuş `preventDefault` edilir (Esc pencereyi kapatmaz), tıktan sonraki 500ms içindeki click yutulur (yeni beliren butona yanlışlıkla basılmasın).
+- Intro komutları (`cat focus.txt`, `./contact.sh`) gerçek komut olarak kaydedilmedi; yalnızca senaryonun parçası. `ls projects/` ise `projects` komutunun takma adı.
+- `gui` komutu (takma adlar: `exit`, `klasik`) 4. aşamada eklendi, çünkü introdaki "Klasik görünüm" butonu onu çalıştırıyor; morph 5. aşamada.
+- `./contact.sh` butonları arasındaki boşluk metin değil CSS boşluğu; §5.2'deki iki boşluklu girinti dar ekranda buton alt satıra kayınca hizayı bozduğu için kaldırıldı.
+- Intro bitince ya da atlanınca `sessionStorage`'a `intro-seen=1` yazılır.

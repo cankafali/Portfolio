@@ -13,13 +13,24 @@ export type TerminalSession = {
   clear: () => void;
 };
 
+type Options = {
+  lang: Lang;
+  /** Oturum açılırken basılı satırlar (intro durumuna göre App belirler). */
+  initialLines: () => OutputLine[];
+  onOpenClassic: () => void;
+};
+
 // Çıktı geçmişi terminal penceresinden bağımsız tutulur;
 // pencere kapanıp açıldığında (klasik ↔ terminal) geçmiş korunur.
-export function useTerminalSession(lang: Lang): TerminalSession {
-  const [entries, setEntries] = useState<Entry[]>(() => [
-    { id: 0, line: line(text(messages[lang].terminal.exploreHint, "muted")) },
-  ]);
-  const nextId = useRef(1);
+export function useTerminalSession({
+  lang,
+  initialLines,
+  onOpenClassic,
+}: Options): TerminalSession {
+  const [entries, setEntries] = useState<Entry[]>(() =>
+    initialLines().map((item, id) => ({ id, line: item })),
+  );
+  const nextId = useRef(entries.length);
 
   const append = useCallback((lines: OutputLine[]) => {
     const created = lines.map((item) => ({ id: nextId.current++, line: item }));
@@ -28,7 +39,10 @@ export function useTerminalSession(lang: Lang): TerminalSession {
 
   const clear = useCallback(() => setEntries([]), []);
 
-  const actions = useMemo<TerminalActions>(() => ({ clear }), [clear]);
+  const actions = useMemo<TerminalActions>(
+    () => ({ clear, openClassic: onOpenClassic }),
+    [clear, onOpenClassic],
+  );
 
   const run = useCallback(
     async (input: string) => {

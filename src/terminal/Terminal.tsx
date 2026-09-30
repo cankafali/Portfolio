@@ -12,17 +12,24 @@ import { OutputLine } from "./OutputLine";
 import { Prompt } from "./Prompt";
 import styles from "./Terminal.module.css";
 import { TERMINAL_TITLE_ID, TerminalWindow } from "./TerminalWindow";
+import { useIntro } from "./useIntro";
 import type { TerminalSession } from "./useTerminalSession";
 
 type Props = {
   session: TerminalSession;
   onClose: () => void;
+  /** Yalnızca ilk açılışta, intro daha önce görülmediyse true. */
+  playIntro: boolean;
+  narrow: boolean;
+  onIntroDone: () => void;
 };
 
 const TYPING_PAUSE_MS = 600;
+const SWALLOW_CLICK_MS = 500;
 
-export function Terminal({ session, onClose }: Props) {
-  const { t } = useLanguage();
+export function Terminal({ session, onClose, playIntro, narrow, onIntroDone }: Props) {
+  const { lang, t } = useLanguage();
+  const intro = useIntro({ enabled: playIntro, narrow, lang, session, onDone: onIntroDone });
   const [value, setValue] = useState("");
   const [caret, setCaret] = useState(0);
   const [typing, setTyping] = useState(false);
@@ -42,7 +49,37 @@ export function Terminal({ session, onClose }: Props) {
   useLayoutEffect(() => {
     const output = outputRef.current;
     if (output) output.scrollTop = output.scrollHeight;
-  }, [session.entries]);
+  }, [session.entries, intro.typed]);
+
+  // Intro sırasında herhangi bir tuş, tık veya dokunuş introyu anında tamamlar.
+  // Atlatan tuş/tık başka bir iş yapmaz (ör. Esc pencereyi kapatmaz, tık yeni butona düşmez).
+  const { running: introRunning, skip: skipIntro } = intro;
+  useEffect(() => {
+    if (!introRunning) return;
+    const swallowClick = (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      skipIntro();
+    };
+    const onPointerDown = () => {
+      window.addEventListener("click", swallowClick, { capture: true, once: true });
+      window.setTimeout(
+        () => window.removeEventListener("click", swallowClick, { capture: true }),
+        SWALLOW_CLICK_MS,
+      );
+      skipIntro();
+    };
+    window.addEventListener("keydown", onKeyDown, { capture: true });
+    window.addEventListener("pointerdown", onPointerDown, { capture: true });
+    return () => {
+      window.removeEventListener("keydown", onKeyDown, { capture: true });
+      window.removeEventListener("pointerdown", onPointerDown, { capture: true });
+    };
+  }, [introRunning, skipIntro]);
 
   const markTyping = () => {
     setTyping(true);
@@ -100,9 +137,13 @@ export function Terminal({ session, onClose }: Props) {
     focusInput();
   };
 
-  const before = value.slice(0, caret);
-  const underCursor = value.slice(caret, caret + 1) || " ";
-  const after = value.slice(caret + 1);
+  // Intro yazarken aktif satır yazılan komutu, sonra input'un değerini gösterir.
+  const shown = introRunning ? intro.typed : value;
+  const cursorAt = introRunning ? shown.length : caret;
+  const before = shown.slice(0, cursorAt);
+  const underCursor = shown.slice(cursorAt, cursorAt + 1) || " ";
+  const after = shown.slice(cursorAt + 1);
+  const cursorSteady = typing || introRunning;
 
   return (
     <div
@@ -128,7 +169,7 @@ export function Terminal({ session, onClose }: Props) {
               <Prompt>
                 <span aria-hidden="true">
                   {before}
-                  <span className={`${styles.cursor} ${typing ? styles.typing : ""}`}>
+                  <span className={`${styles.cursor} ${cursorSteady ? styles.typing : ""}`}>
                     {underCursor}
                   </span>
                   {after}
@@ -150,6 +191,11 @@ export function Terminal({ session, onClose }: Props) {
               />
             </div>
           </div>
+          {introRunning && (
+            <p className={styles.skipHint} aria-hidden="true">
+              {t.terminal.skipHint}
+            </p>
+          )}
         </div>
       </TerminalWindow>
     </div>

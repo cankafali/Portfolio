@@ -7,7 +7,8 @@ export type Segment =
   | { kind: "text"; text: string; tone?: Tone }
   | { kind: "link"; text: string; href: string; download?: boolean }
   | { kind: "command"; text: string; command: string }
-  | { kind: "copy"; value: string };
+  | { kind: "copy"; value: string }
+  | { kind: "button"; text: string; command: string; variant: "primary" | "secondary" };
 
 export type OutputLine =
   | { type: "prompt"; command: string }
@@ -16,6 +17,7 @@ export type OutputLine =
 
 export type TerminalActions = {
   clear: () => void;
+  openClassic: () => void;
 };
 
 export type CommandContext = { args: string[]; lang: Lang; actions: TerminalActions };

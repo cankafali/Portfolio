@@ -62,6 +62,16 @@ function SegmentView({ segment, onCommand }: { segment: Segment; onCommand: Prop
       );
     case "copy":
       return <CopyButton value={segment.value} />;
+    case "button":
+      return (
+        <button
+          type="button"
+          className={styles[segment.variant]}
+          onClick={() => onCommand(segment.command)}
+        >
+          {segment.text}
+        </button>
+      );
   }
 }
 
