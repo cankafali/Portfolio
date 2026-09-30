@@ -43,3 +43,16 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - Bölüm başlıklarındaki `~/projects` gibi yollar artık düğme; terminali o komutla açar. Bunun için `education` komutu 6. aşamadan öne alındı.
 - Alt bilgide `~` ipucu eklendi; alt boşluk mini terminalin altında metin kalmayacak kadar artırıldı.
 - Mini terminal koyu temada sayfa zeminiyle aynı renkte olduğu için `--page-line` çerçeveli; hover ipucu, arkadaki metnin üstüne bindiğinde okunsun diye zeminli.
+- Tab yalnızca `Shift` olmadan tamamlama yapar; `Shift+Tab` odağı dışarı taşır, Esc terminalden çıkar (klavye tuzağı yok). Boş satırda Tab tüm görünür komutları listeler; birden fazla eşleşmede ortak önek doldurulur ve seçenekler basılır.
+- Tab tamamlama yalnızca komut adları ve ilk argüman için (`open <proje>`, `lang <dil>`); gizli komutlar tamamlanmaz.
+- Öneri (Levenshtein ≤ 2): çok kelimeli girdide önce çok kelimeli takma adlar (`ls projcts` → projects), sonra ilk kelime. 3 karakterden kısa takma adlar (`?`) öneriye aday değil; yoksa her kısa girdiye `help` önerilirdi. Öneri tıklanabilir. `open` da yanlış proje adına öneri verir.
+- Komut geçmişi (`history`, ↑/↓) oturum seviyesinde tutulur; intro komutları dahil değildir; boş satırlar kaydedilmez. İlk ↑'da yazılmakta olan satır saklanır, en yeniden sonra ↓ ile geri gelir.
+- Akışlı komutlar (`sudo hire-me`, `coffee`) için `print`/`printLive`/`wait` eylemleri eklendi; biri sürerken yeni komut başlamaz (çıktı karışmasın). `wait` reduced motion'da beklemez.
+- `coffee` çıktısı tek satır; "Hazır..." kısmı 900ms sonra aynı satıra eklenir.
+- `sudo hire-me` şifre satırı spesifikasyondaki gibi İngilizce (`[sudo] password for recruiter:`), onay mesajı seçili dilde.
+- `echo` ham argüman metnini basar (çoklu boşluklar korunur); metni saran tek tırnak çifti atılır.
+- `cv` dosyayı programatik `<a download>` ile indirir. `public/cv-tr.pdf` ve `cv-en.pdf` henüz yok.
+- `github` veri yokken (`fetchedAt: null`) "henüz alınmadı" + profil linki basar; script 7. aşamada.
+- Komut çipleri: help, about, projects, skills, contact, cv, gui. Tıklanınca 12ms/karakter yazılıp çalışır (reduced motion'da anında); yazma sürerken ikinci çip yok sayılır.
+- Dokunmatik cihazlarda çip ya da çıktıdaki tıklanabilir öğe input'a odaklanmaz; mobil klavye açılmaz.
+- Morph'ta solan kısım artık çıktı + çiplerin tamamı (gövde); yoksa küçülen kutunun sağ alt köşesinde bir çip görünebiliyordu.

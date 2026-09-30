@@ -7,7 +7,12 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from "react";
+import { useCommandHistory } from "../hooks/useCommandHistory";
+import { prefersReducedMotion } from "../hooks/useReducedMotion";
+import { isAbort, useTypewriter } from "../hooks/useTypewriter";
 import { useLanguage } from "../i18n/useLanguage";
+import { CommandChips } from "./CommandChips";
+import { complete } from "./complete";
 import { MINI_TERMINAL_ID } from "./MiniTerminal";
 import { playClose, playOpen } from "./morph";
 import { OutputLine } from "./OutputLine";
@@ -16,6 +21,7 @@ import styles from "./Terminal.module.css";
 import { TERMINAL_TITLE_ID, TerminalWindow } from "./TerminalWindow";
 import { useIntro } from "./useIntro";
 import type { TerminalSession } from "./useTerminalSession";
+import { line, text } from "./types";
 
 export type TerminalPhase = "opening" | "open" | "closing";
 
@@ -33,6 +39,9 @@ type Props = {
 
 const TYPING_PAUSE_MS = 600;
 const SWALLOW_CLICK_MS = 500;
+const CHIP_CHAR_MS = 12;
+
+const hasFinePointer = () => window.matchMedia("(pointer: fine)").matches;
 
 export function Terminal({
   session,
@@ -53,18 +62,28 @@ export function Terminal({
   const backdropRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const typingTimer = useRef<number | undefined>(undefined);
+  const chipController = useRef<AbortController | null>(null);
+  const commandHistory = useCommandHistory(session.history);
+  const chipTyper = useTypewriter();
 
   const focusInput = () => inputRef.current?.focus({ preventScroll: true });
 
-  useEffect(() => () => window.clearTimeout(typingTimer.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(typingTimer.current);
+      chipController.current?.abort();
+    },
+    [],
+  );
 
   // Pencere açık hale gelince odak input'a gelir. Dokunmatik cihazda klavyeyi zorla
   // açmamak için odak input yerine pencereye alınır.
   useEffect(() => {
     if (phase !== "open") return;
-    if (window.matchMedia("(pointer: fine)").matches) focusInput();
+    if (hasFinePointer()) focusInput();
     else overlayRef.current?.focus({ preventScroll: true });
   }, [phase]);
 
@@ -74,10 +93,10 @@ export function Terminal({
     const overlay = overlayRef.current;
     const backdrop = backdropRef.current;
     const frame = frameRef.current;
-    const output = outputRef.current;
-    if (!overlay || !backdrop || !frame || !output) return;
+    const content = bodyRef.current;
+    if (!overlay || !backdrop || !frame || !content) return;
 
-    const parts = { overlay, backdrop, frame, output };
+    const parts = { overlay, backdrop, frame, content };
     const mini = document.getElementById(MINI_TERMINAL_ID);
     const animations = phase === "closing" ? playClose(parts, mini) : playOpen(parts, mini);
     let cancelled = false;
@@ -97,7 +116,7 @@ export function Terminal({
   useLayoutEffect(() => {
     const output = outputRef.current;
     if (output) output.scrollTop = output.scrollHeight;
-  }, [session.entries, intro.typed]);
+  }, [session.entries, intro.typed, chipTyper.typed]);
 
   // Intro sırasında herhangi bir tuş, tık veya dokunuş introyu anında tamamlar.
   // Atlatan tuş/tık başka bir iş yapmaz (ör. Esc pencereyi kapatmaz, tık yeni butona düşmez).
@@ -137,14 +156,40 @@ export function Terminal({
 
   const syncCaret = () => setCaret(inputRef.current?.selectionStart ?? value.length);
 
-  const resetInput = () => {
-    setValue("");
-    setCaret(0);
+  const setInput = (next: string) => {
+    setValue(next);
+    setCaret(next.length);
   };
 
+  const resetInput = () => setInput("");
+
+  // Çıktıdaki tıklanabilir öğeler ve çipler. Dokunmatikte input'a odaklanıp
+  // klavyeyi açmaz (mobilde gezinme çiplerle yapılır).
   const runCommand = (command: string) => {
     void session.run(command);
-    focusInput();
+    if (hasFinePointer()) focusInput();
+  };
+
+  // Çip: komut hızlandırılmış yazma animasyonuyla (12ms/karakter) yazılıp çalıştırılır.
+  const runChip = async (command: string) => {
+    if (chipController.current) return;
+    commandHistory.reset();
+    resetInput();
+    if (prefersReducedMotion()) {
+      runCommand(command);
+      return;
+    }
+    const controller = new AbortController();
+    chipController.current = controller;
+    try {
+      await chipTyper.type(command, () => CHIP_CHAR_MS, controller.signal);
+      chipTyper.reset();
+      runCommand(command);
+    } catch (error) {
+      if (!isAbort(error)) throw error;
+    } finally {
+      chipController.current = null;
+    }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -158,8 +203,28 @@ export function Terminal({
 
     if (event.key === "Enter") {
       event.preventDefault();
+      commandHistory.reset();
       runCommand(value);
       resetInput();
+    } else if (event.key === "Tab" && !event.shiftKey) {
+      // Shift+Tab odağı dışarı taşımaya devam eder (klavye tuzağı olmasın).
+      event.preventDefault();
+      const completion = complete(value);
+      if (completion.options.length > 1) {
+        session.append([
+          { type: "prompt", command: value },
+          line(text(completion.options.join("   "), "teal")),
+        ]);
+      }
+      setInput(completion.value);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      const previous = commandHistory.previous(value);
+      if (previous !== null) setInput(previous);
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      const next = commandHistory.next();
+      if (next !== null) setInput(next);
     } else if (ctrl && event.key.toLowerCase() === "l") {
       event.preventDefault();
       session.clear();
@@ -185,13 +250,15 @@ export function Terminal({
     focusInput();
   };
 
-  // Intro yazarken aktif satır yazılan komutu, sonra input'un değerini gösterir.
-  const shown = introRunning ? intro.typed : value;
-  const cursorAt = introRunning ? shown.length : caret;
+  // Aktif satır: intro ya da çip yazıyorsa yazılan komut, değilse input'un değeri.
+  const animatedText = introRunning ? intro.typed : chipTyper.typed;
+  const animating = introRunning || chipTyper.typed !== "";
+  const shown = animating ? animatedText : value;
+  const cursorAt = animating ? shown.length : caret;
   const before = shown.slice(0, cursorAt);
   const underCursor = shown.slice(cursorAt, cursorAt + 1) || " ";
   const after = shown.slice(cursorAt + 1);
-  const cursorSteady = typing || introRunning;
+  const cursorSteady = typing || animating;
 
   return (
     <div
@@ -211,44 +278,47 @@ export function Terminal({
         onClose={onClose}
         onToggleFullscreen={() => setFullscreen((on) => !on)}
       >
-        <div className={styles.body} onClick={handleWindowClick}>
-          <div ref={outputRef} className={styles.output}>
-            <div role="log" aria-live="polite">
-              {session.entries.map((entry) => (
-                <OutputLine key={entry.id} line={entry.line} onCommand={runCommand} />
-              ))}
-            </div>
-            <div className={styles.activeLine}>
-              <Prompt>
-                <span aria-hidden="true">
-                  {before}
-                  <span className={`${styles.cursor} ${cursorSteady ? styles.typing : ""}`}>
-                    {underCursor}
+        <div ref={bodyRef} className={styles.body} onClick={handleWindowClick}>
+          <div className={styles.outputArea}>
+            <div ref={outputRef} className={styles.output}>
+              <div role="log" aria-live="polite">
+                {session.entries.map((entry) => (
+                  <OutputLine key={entry.id} line={entry.line} onCommand={runCommand} />
+                ))}
+              </div>
+              <div className={styles.activeLine}>
+                <Prompt>
+                  <span aria-hidden="true">
+                    {before}
+                    <span className={`${styles.cursor} ${cursorSteady ? styles.typing : ""}`}>
+                      {underCursor}
+                    </span>
+                    {after}
                   </span>
-                  {after}
-                </span>
-              </Prompt>
-              <input
-                ref={inputRef}
-                className={styles.input}
-                value={value}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                onSelect={syncCaret}
-                aria-label={t.terminal.inputLabel}
-                autoComplete="off"
-                autoCapitalize="off"
-                autoCorrect="off"
-                spellCheck={false}
-                enterKeyHint="send"
-              />
+                </Prompt>
+                <input
+                  ref={inputRef}
+                  className={styles.input}
+                  value={value}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                  onSelect={syncCaret}
+                  aria-label={t.terminal.inputLabel}
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  enterKeyHint="send"
+                />
+              </div>
             </div>
+            {introRunning && (
+              <p className={styles.skipHint} aria-hidden="true">
+                {t.terminal.skipHint}
+              </p>
+            )}
           </div>
-          {introRunning && (
-            <p className={styles.skipHint} aria-hidden="true">
-              {t.terminal.skipHint}
-            </p>
-          )}
+          <CommandChips onRun={(command) => void runChip(command)} />
         </div>
       </TerminalWindow>
     </div>

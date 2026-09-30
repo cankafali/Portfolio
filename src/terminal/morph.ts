@@ -3,7 +3,7 @@
 // Pencere ölçeklenmez (metin ve köşeler bozulmasın diye); yerinde kalan pencere
 // `clip-path: inset(... round r)` ile sağ alt köşesine doğru kırpılırken
 // `transform: translate` ile mini terminalin konumuna taşınır. İkisi de layout
-// tetiklemez; çıktı alanı önceden şeffaflaştığı için görünen yalnızca mürekkep zemindir.
+// tetiklemez; içerik (çıktı + çipler) önceden şeffaflaştığı için görünen yalnızca mürekkep zemindir.
 
 import { prefersReducedMotion } from "../hooks/useReducedMotion";
 
@@ -23,7 +23,8 @@ export type MorphParts = {
   overlay: HTMLElement;
   backdrop: HTMLElement;
   frame: HTMLElement;
-  output: HTMLElement;
+  /** Çıktı ve komut çipleri: pencere küçülmeden önce solar. */
+  content: HTMLElement;
 };
 
 function miniRect(mini: HTMLElement | null): DOMRect {
@@ -62,7 +63,7 @@ export function playClose(parts: MorphParts, mini: HTMLElement | null): Animatio
   }
   const hero = document.getElementById("hero-name");
   return [
-    parts.output.animate(fade(1, 0), { duration: OUTPUT_FADE_MS, fill: "forwards" }),
+    parts.content.animate(fade(1, 0), { duration: OUTPUT_FADE_MS, fill: "forwards" }),
     parts.backdrop.animate(fade(1, 0), { duration: MORPH_MS, easing: EASE, fill: "forwards" }),
     parts.frame.animate(frameKeyframes(parts.frame, mini), {
       delay: WINDOW_DELAY_MS,
@@ -95,7 +96,7 @@ export function playOpen(parts: MorphParts, mini: HTMLElement | null): Animation
       easing: EASE,
       fill: "backwards",
     }),
-    parts.output.animate(fade(0, 1), {
+    parts.content.animate(fade(0, 1), {
       delay: OUTPUT_FADE_IN_DELAY_MS,
       duration: NAME_FADE_MS,
       fill: "backwards",

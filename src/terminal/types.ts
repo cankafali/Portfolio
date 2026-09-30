@@ -18,9 +18,25 @@ export type OutputLine =
 export type TerminalActions = {
   clear: () => void;
   openClassic: () => void;
+  setLang: (lang: Lang) => void;
+  /** Bu oturumda çalıştırılan komutlar (eskiden yeniye). */
+  history: () => readonly string[];
+  /** Satırları hemen basar (akışlı çıktı veren komutlar için). */
+  print: (lines: OutputLine[]) => void;
+  /** Bir satır basar ve onu sonradan güncelleyen fonksiyonu döndürür. */
+  printLive: (line: OutputLine) => (next: OutputLine) => void;
+  /** Bekler; reduced motion açıkken beklemez. */
+  wait: (ms: number) => Promise<void>;
+  download: (url: string) => void;
 };
 
-export type CommandContext = { args: string[]; lang: Lang; actions: TerminalActions };
+export type CommandContext = {
+  args: string[];
+  /** Komut adından sonraki ham metin (echo boşlukları korusun diye). */
+  input: string;
+  lang: Lang;
+  actions: TerminalActions;
+};
 
 export type Command = {
   name: string;

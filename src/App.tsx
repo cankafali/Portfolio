@@ -43,7 +43,7 @@ function readInitialState(): { view: "terminal" | "classic"; intro: IntroMode; n
 }
 
 function Shell() {
-  const { lang } = useLanguage();
+  const { lang, setLang } = useLanguage();
   const [initial] = useState(readInitialState);
   const [view, setView] = useState<View>(initial.view);
   const [introPlaying, setIntroPlaying] = useState(initial.intro === "play");
@@ -63,6 +63,7 @@ function Shell() {
       return [introHint(lang)];
     },
     onOpenClassic: openClassic,
+    onSetLang: setLang,
   });
 
   // Mini terminal, "~" tuşu, bölüm yolları. Komut varsa hemen çalışır;

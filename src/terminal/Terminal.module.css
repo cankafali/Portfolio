@@ -32,11 +32,21 @@
   min-height: 0;
 }
 
+/* Çıktı + intro ipucu; altında sabit komut çipleri */
+.outputArea {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 .output {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: var(--space-4) var(--space-5) var(--space-5);
+  scrollbar-width: thin;
   scrollbar-color: var(--ink-raised) transparent;
 }
 

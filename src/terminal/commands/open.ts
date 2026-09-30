@@ -1,5 +1,6 @@
 import { projects } from "../../content/projects";
 import { messages } from "../../i18n/useLanguage";
+import { closest } from "../suggest";
 import { line, text, type Command, type Segment } from "../types";
 
 export const findProject = (slug: string) =>
@@ -23,7 +24,17 @@ export const open: Command = {
 
     const project = findProject(slug);
     if (!project) {
-      return [line(text(`${t.terminal.projectNotFound}: ${slug}`, "red")), line(...available)];
+      const suggestion = closest(slug.toLowerCase(), projects, (candidate) => [candidate.slug]);
+      return [
+        line(text(`${t.terminal.projectNotFound}: ${slug}`, "red")),
+        suggestion
+          ? line(text(`${t.terminal.didYouMean} `, "muted"), {
+              kind: "command",
+              text: suggestion.slug,
+              command: `open ${suggestion.slug}`,
+            })
+          : line(...available),
+      ];
     }
 
     return [
