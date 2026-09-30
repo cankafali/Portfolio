@@ -10,14 +10,14 @@ export type EducationItem = {
 // Zaman sırasıyla, en yeni üstte.
 export const education: EducationItem[] = [
   {
-    start: "{yıl}",
+    start: "2018",
     end: null,
     school: "Erciyes Üniversitesi",
     program: { tr: "Bilgisayar Mühendisliği", en: "Computer Engineering" },
   },
   {
-    start: "{yıl}",
-    end: "{yıl}",
+    start: "2026",
+    end: "2027",
     school: "Workintech",
     program: { tr: "Full Stack Web Developer programı", en: "Full Stack Web Developer program" },
   },

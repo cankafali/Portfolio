@@ -34,13 +34,6 @@
   list-style: none;
 }
 
-/* "Öğreniyorum" diğerlerinden ayrı durur */
-.learning {
-  grid-column: 1 / -1;
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--page-line);
-}
-
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
@@ -72,10 +65,5 @@
 
   .items li:not(:last-child)::after {
     content: ", ";
-  }
-
-  .learning {
-    padding-top: 0;
-    border-top: 0;
   }
 }

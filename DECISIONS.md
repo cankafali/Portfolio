@@ -71,3 +71,17 @@ TASARIM.md'de açık kalan noktalar için verilen kararlar (her biri tek satır)
 - Konsol mesajı `src/consoleGreeting.ts`'te; dil `?lang=en` ise İngilizce basılır. Font adı fontsource'un kaydettiği `Martian Mono Variable`.
 - `fetch-github.mjs` dil sıralamasını kendi (fork ve arşiv olmayan) repolarının ana diline göre sayarak yapar (repo başına ek API çağrısı olmasın diye).
 - Lighthouse skorları (`site.ts`) ana sayfanın (`/`) ölçümü: 99 / 100 / 100 / 100. `?view=classic` 100 / 100 / 100 / 100.
+- **İçerik (2026-09-30):** `cv-tr.pdf` / `cv-eng.pdf`, repo README'leri ve canlı demolardan dolduruldu. Kullanıcının elle başladığı değerlerdeki süslü parantezler kaldırıldı; odak cümlesi, hakkımda metni, eğitim yılları ve LinkedIn onun yazdığı gibi korundu. E-postadaki eksik `@` CV'ye göre düzeltildi.
+- Unvan kullanıcı kararıyla "Full-Stack Developer" (TASARIM.md'deki "Frontend developer" yerine); `<title>` artık `profile.role.en`'den üretiliyor.
+- Yitik girdisi başka bir uygulamayı (kayıp eşya ilanları) anlatıyordu; CV, README ve demoya göre (unutulmuş kelimeler için sesli sözlük) yeniden yazıldı. Sismo'nun teknolojileri README'ye göre düzeltildi (Node/Express değil ASP.NET Core + C#), repoda olmayan özellikler ("konum bazlı bildirimler", "geçmiş analizler") çıkarıldı.
+- Lup: TASARIM.md ("kuyumcu vitrini") ve CV ("GSAP animasyon uygulaması") birleştirildi; demo "Sönmez Kuyumculuk". Stack'e repo dilinden TypeScript ve README'den Next.js eklendi.
+- Proje sırası kullanıcının dosyadaki sırası (Lup, Sismo, Yitik Sözlük). Yıllar GitHub'daki oluşturma tarihine göre 2026.
+- "Ne öğrendim" CV'de yok: Lup için boş (`learned: null`, satır gizlenir); Sismo ve Yitik için kullanıcının taslağı gerçeklere göre sadeleştirildi.
+- Beceriler CV'den; gruplar Diller, Frontend, Backend, Araçlar. Maddeler iki dilli (`items: Record<Lang, string[]>`). "Öğreniyorum" grubu kullanıcı kararıyla gösterilmiyor; önceki taslaktaki TypeScript/Next.js/Vite varsayımları CV'de olmadığı için çıkarıldı.
+- İngilizce CV "Computer Science" diyor; Türkçe "Bilgisayar Mühendisliği" olduğu için sitede doğru karşılığı "Computer Engineering" kullanıldı.
+- Workintech: CV "02/2026 – Present"; kullanıcının dosyasındaki 2026 – 2027 korundu.
+- `profile.repoUrl` boş: sitenin reposu henüz yok; boşken alt bilgideki kaynak kodu linki ve konsol mesajındaki satır gösterilmez.
+- CV PDF'leri kullanıcı kararıyla olduğu gibi `public/`'e kondu (telefon ve doğum tarihi içeriyor; indiren herkes görebilir).
+- Proje önizlemeleri (`public/projects/*.webp`) canlı demoların 1280×800 ekran görüntüsünden 640×400 WebP (8–20 KB). OG görseli isim ve unvanla yeniden üretildi.
+- Ön-render'daki meta description deseni, Prettier'ın etiketi çok satıra bölmesine dayanıklı hale getirildi.
+- İçerik büyüdüğü için JS 83.5 → 86.3 KB gzip (sınır 90 KB).

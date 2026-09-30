@@ -42,7 +42,7 @@ html = html.replace(stylesheet[0], () => `<style>${css}</style>`);
 html = replaceOnce(html, /<script type="module"/, `<script type="module" fetchpriority="low"`);
 
 html = replaceOnce(html, /\s*<title>[\s\S]*?<\/title>/, "");
-html = replaceOnce(html, /\s*<meta name="description"[^>]*>/, "");
+html = replaceOnce(html, /\s*<meta\s+name="description"[^>]*>/, "");
 html = replaceOnce(
   html,
   /<\/head>/,

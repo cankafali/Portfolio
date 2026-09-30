@@ -22,7 +22,7 @@ export function logConsoleGreeting(lang: Lang) {
     "font: 600 16px 'Martian Mono Variable', monospace; color: #FFB547; background: #0F1B2D; padding: 8px 12px; border-radius: 6px;",
   );
   console.log(
-    `%c${t.body} ${profile.email}\n${t.source} ${profile.repoUrl}`,
+    `%c${t.body} ${profile.email}${profile.repoUrl ? `\n${t.source} ${profile.repoUrl}` : ""}`,
     "font: 13px system-ui; color: #4A5A70; line-height: 1.6;",
   );
 }

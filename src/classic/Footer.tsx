@@ -10,10 +10,15 @@ export function Footer() {
     <footer className={styles.footer}>
       <p className={styles.inner}>
         <span>
-          {t.footer.builtWith}{" "}
-          <a href={profile.repoUrl} target="_blank" rel="noreferrer">
-            {t.footer.source}
-          </a>
+          {t.footer.builtWith}
+          {profile.repoUrl && (
+            <>
+              {" "}
+              <a href={profile.repoUrl} target="_blank" rel="noreferrer">
+                {t.footer.source}
+              </a>
+            </>
+          )}
         </span>
         <span>
           {t.footer.tildeBefore} <kbd className={styles.kbd}>~</kbd> {t.footer.tildeAfter}

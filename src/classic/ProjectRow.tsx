@@ -65,10 +65,12 @@ export function ProjectRow({ project, open, imageBroken, onImageError, onToggle,
             <dt>{t.project.solved}</dt>
             <dd>{project.solved[lang]}</dd>
           </div>
-          <div>
-            <dt>{t.project.learned}</dt>
-            <dd>{project.learned[lang]}</dd>
-          </div>
+          {project.learned && (
+            <div>
+              <dt>{t.project.learned}</dt>
+              <dd>{project.learned[lang]}</dd>
+            </div>
+          )}
         </dl>
       </div>
     </li>

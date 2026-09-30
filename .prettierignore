@@ -2,3 +2,5 @@ dist
 node_modules
 package-lock.json
 TASARIM.md
+# build sırasında scripts/fetch-github.mjs tarafından üretilir
+src/content/github.json

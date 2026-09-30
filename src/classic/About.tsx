@@ -19,10 +19,10 @@ export function About() {
           <h3 className={styles.skillsTitle}>{t.sections.skills}</h3>
           <div className={styles.groups}>
             {skills.map((group) => (
-              <div key={group.id} className={group.id === "learning" ? styles.learning : undefined}>
+              <div key={group.id}>
                 <h4 className={styles.groupTitle}>{group.title[lang]}</h4>
                 <ul className={styles.items}>
-                  {group.items.map((item) => (
+                  {group.items[lang].map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>

@@ -10,23 +10,30 @@ export type Profile = {
   availability: Localized;
   email: string;
   links: { github: string; linkedin: string };
+  /** Bu sitenin kaynak kodu; boşken alt bilgide ve konsol mesajında gösterilmez. */
   repoUrl: string;
   cvFile: Localized;
 };
 
 export const profile: Profile = {
-  name: "{AD SOYAD}",
+  name: "Hakkı Can Kafalı",
   handle: "cankafali",
-  role: { tr: "Frontend developer", en: "Frontend developer" },
+  role: { tr: "Full-Stack Developer", en: "Full-Stack Developer" },
   tagline: {
-    tr: "Frontend developer, Erciyes Üniversitesi Bilgisayar Mühendisliği öğrencisi",
-    en: "Frontend developer, Computer Engineering student at Erciyes University",
+    tr: "Full-Stack Developer, Erciyes Üniversitesi Bilgisayar Mühendisliği öğrencisi",
+    en: "Full-Stack Developer, Computer Engineering student at Erciyes University",
   },
-  focus: { tr: "{odak cümlesi}", en: "{focus sentence}" },
-  location: { tr: "{ŞEHİR}", en: "{CITY}" },
-  availability: { tr: "{MÜSAİTLİK}", en: "{AVAILABILITY}" },
-  email: "{EPOSTA}",
-  links: { github: "https://github.com/cankafali", linkedin: "{LINKEDIN_URL}" },
-  repoUrl: "https://github.com/cankafali/{REPO}",
+  focus: {
+    tr: "Fikirleri, karakteri olan ve gerçekten çalışan web deneyimlerine dönüştürüyorum.",
+    en: "I turn ideas into web experiences with character, ones that actually work.",
+  },
+  location: { tr: "Kayseri", en: "Kayseri, Türkiye" },
+  availability: { tr: "Junior pozisyonlara açığım.", en: "Open to junior positions." },
+  email: "hakkicankafali@outlook.com",
+  links: {
+    github: "https://github.com/cankafali",
+    linkedin: "https://www.linkedin.com/in/hakkicankafali/",
+  },
+  repoUrl: "",
   cvFile: { tr: "/cv-tr.pdf", en: "/cv-en.pdf" },
 };

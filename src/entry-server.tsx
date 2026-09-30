@@ -20,7 +20,7 @@ const escapeHtml = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export function headTags(): string {
-  const title = escapeHtml(`${profile.name}, Frontend Developer`);
+  const title = escapeHtml(`${profile.name}, ${profile.role.en}`);
   const description = escapeHtml(profile.focus.tr);
   const url = escapeHtml(`${siteUrl}/`);
   const image = escapeHtml(`${siteUrl}/og.png`);

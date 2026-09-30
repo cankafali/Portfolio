@@ -11,7 +11,7 @@ export const skills: Command = {
       type: "table",
       rows: skillGroups.map((group) => [
         [text(group.title[lang], "muted")],
-        [text(group.items.join(", "))],
+        [text(group.items[lang].join(", "))],
       ]),
     },
   ],
